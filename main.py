@@ -1,8 +1,9 @@
-from methods.trapezis import trapezis_compost, trapezis_simple
-from methods.simpson import simpson_compost, simpson_simple
+from integration_methods.trapezis import trapezis_compost, trapezis_simple
+from integration_methods.simpson import simpson_compost, simpson_simple
 from utils.funcions import *
+import numpy as np
 
-funcions: list[Funcio] = [f1, f2, f3, f4, f5, f6, f7, f8, f9, f10]
+funcions_integracio: list[Funcio] = [f1, f2, f3, f4, f5, f6, f7, f8, f9, f10]
 
 def menu():
     print("1 - f1: f(x) = x")
@@ -27,7 +28,7 @@ while True:
     else:
         break
 
-funcio = funcions[opcio-1]
+funcio = funcions_integracio[opcio-1]
 
 while True:
     try:
