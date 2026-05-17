@@ -59,3 +59,11 @@ def zeros_legendre(n):
         raices = np.concatenate([-raices, [0], raices[::-1]])
     
     return np.sort(raices)
+
+def integracio_gauss_legendre(a, b, m, f):
+    zeros = zeros_legendre(m+1)
+    pesos = pesos_legendre(m, zeros)
+
+    suma = sum(w*f(((b-a)/2) * x + (b+a)/2) for x, w in zip(zeros, pesos))
+
+    return ((b-a)/2)*suma
