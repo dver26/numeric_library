@@ -1,4 +1,6 @@
-def pol_lagrange(n, x):
+import numpy as np
+
+def pol_legendre(n, x):
     if n == 0: return 1
     elif n == 1: return x
 
@@ -11,7 +13,7 @@ def pol_lagrange(n, x):
 
     return pn_1
 
-def derivada_pol_lagrange(n, x):
+def derivada_pol_legendre(n, x):
     if n == 0: return 0
     elif n == 1: return 1
 
@@ -29,10 +31,31 @@ def derivada_pol_lagrange(n, x):
 
     return dpn_1
 
-def pesos_lagrange(m: int, x: list[float]):
+def pesos_legendre(m: int, x: list[float]):
     pesos  = []
     for i in range(0, m+1):
-        der = derivada_pol_lagrange(m+1, x[i])
+        der = derivada_pol_legendre(m+1, x[i])
         pesos.append(2 / ((1 - x[i]*x[i]) * der * der))
 
     return pesos
+
+def zeros_legendre(n):
+    raices = []
+    for k in range(1, n//2 + 1):
+        # Estimación inicial
+        x = np.cos(np.pi * (k - 0.25) / (n + 0.5))
+        # Newton-Raphson
+        for _ in range(100):
+            dx = -pol_legendre(n, x) / derivada_pol_legendre(n, x)
+            x += dx
+            if abs(dx) < 1e-15: break
+        raices.append(x)
+    
+    # Simetría
+    raices = np.array(raices)
+    if n % 2 == 0:
+        raices = np.concatenate([-raices, raices[::-1]])
+    else:
+        raices = np.concatenate([-raices, [0], raices[::-1]])
+    
+    return np.sort(raices)
